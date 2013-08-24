@@ -2,7 +2,10 @@
 glfw*/
 glew*/
 glm*/
-lig*.*
+lib*.*
+tags
+first_window
+triangle
 
 
 #################

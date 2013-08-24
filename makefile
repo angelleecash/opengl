@@ -10,7 +10,7 @@ SYSCFLAGS =
 MYCFLAGS = 
 
 SYSLIBS = 
-MYLIBS = ./libglfw.so ./libGLEW.so.1.9.0
+MYLIBS = ./libglfw.so ./libGLEW.so.1.9
 
 SYSLDFLAGS = 
 MYLDFLAGS = -Wl,-R -Wl,/home/chenliang/git_projects/opengl
@@ -22,10 +22,11 @@ first_window: first_window.o util.o
 first_window.o: first_window.cpp
 
 
-triangle: triangle.o util.o
-	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) triangle.o util.o $(LIBS)  
+triangle: triangle.o util.o shader_loader.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) triangle.o util.o shader_loader.o $(LIBS)  
 
 triangle.o: triangle.cpp
+shader_loader.o: shader_loader.cpp
 
 
 
