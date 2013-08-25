@@ -6,7 +6,8 @@ lib*.*
 tags
 first_window
 triangle
-
+matrix
+color_cube
 
 #################
 ## Eclipse

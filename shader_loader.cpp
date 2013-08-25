@@ -38,7 +38,7 @@ int LoadShader(GLuint shaderId, const char* path)
 	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
 
-	P("shader compile result %d, log length %d\n", result, logLength);
+	//P("shader compile result %d, log length %d\n", result, logLength);
 	if(logLength > 0)
 	{
 		char log[logLength+1];
@@ -59,7 +59,6 @@ GLuint LoadProgram(const char* vertexShaderFile, const char* fragmentShaderFile)
 
 	LoadShader(fragmentShaderId, fragmentShaderFile);
 
-
 	GLuint programId = glCreateProgram();
 	glAttachShader(programId, vertexShaderId);
 	glAttachShader(programId, fragmentShaderId);
@@ -71,7 +70,7 @@ GLuint LoadProgram(const char* vertexShaderFile, const char* fragmentShaderFile)
 	glGetProgramiv(programId, GL_LINK_STATUS, &result);
 	glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
 
-	P("link program result %d, log length %d\n", result, logLength);
+	//P("link program result %d, log length %d\n", result, logLength);
 
 	if(logLength > 0)
 	{
@@ -84,5 +83,5 @@ GLuint LoadProgram(const char* vertexShaderFile, const char* fragmentShaderFile)
 	glDeleteShader(vertexShaderId);
 	glDeleteShader(fragmentShaderId);
 
-	return 0;
+	return programId;
 }

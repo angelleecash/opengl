@@ -6,6 +6,9 @@
 #include <GL/glfw.h>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+using namespace glm;
+
 #include "util.h"
 #include "shader_loader.h"
 
@@ -34,13 +37,21 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	
-	glfwSetWindowTitle("triangle");
+	glfwSetWindowTitle("matrix");
 
 	glfwEnable(GLFW_STICKY_KEYS);
 
-	GLuint programId = LoadProgram("triangle.vs", "triangle.fs");
+	GLuint programId = LoadProgram("matrix.vs", "matrix.fs");
+
+	GLuint mvpId = glGetUniformLocation(programId, "mvp");
 
 	GLuint modelPosition = glGetAttribLocation(programId, "modelPosition");
+
+	glm::mat4 projection = glm::perspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
+	glm::mat4 camera = glm::lookAt(glm::vec3(4, 3, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 mvp = projection * camera * model;
 
 	GLfloat modelPositions[] = {
 							       -1.0f, -1.0f, 0.0f,
@@ -59,6 +70,8 @@ int main(int argc, char** argv)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(programId);
+
+		glUniformMatrix4fv(mvpId, 1, GL_FALSE, &mvp[0][0]);
 
 		glEnableVertexAttribArray(modelPosition);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
