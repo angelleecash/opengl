@@ -34,9 +34,14 @@ matrix: matrix.o util.o shader_loader.o
 color_cube: color_cube.o util.o shader_loader.o
 	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) color_cube.o util.o shader_loader.o $(LIBS)  
 
+texture: texture.o util.o shader_loader.o texture_loader.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) texture.o util.o shader_loader.o texture_loader.o $(LIBS)  
+
 triangle.o: triangle.cpp
 shader_loader.o: shader_loader.cpp
 color_cube.o:color_cube.cpp
+texture.o:texture.cpp
+texture_loader.o:texture_loader.cpp
 
 
 util.o: util.cpp
