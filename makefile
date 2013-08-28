@@ -37,12 +37,21 @@ color_cube: color_cube.o util.o shader_loader.o
 texture: texture.o util.o shader_loader.o texture_loader.o
 	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) texture.o util.o shader_loader.o texture_loader.o $(LIBS)  
 
+input: input.o util.o shader_loader.o texture_loader.o inputs.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) input.o util.o shader_loader.o texture_loader.o inputs.o $(LIBS)  
+
+model: model.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) model.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o $(LIBS)  
+
 triangle.o: triangle.cpp
 shader_loader.o: shader_loader.cpp
 color_cube.o:color_cube.cpp
 texture.o:texture.cpp
 texture_loader.o:texture_loader.cpp
-
+input.o:input.cpp
+inputs.o:inputs.cpp
+model.o:model.cpp
+model_loader.o:model_loader.cpp
 
 util.o: util.cpp
 
