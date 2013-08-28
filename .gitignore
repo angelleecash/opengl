@@ -12,6 +12,7 @@ texture
 input
 model
 shader
+vbo
 
 #################
 ## Eclipse
