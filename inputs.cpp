@@ -12,12 +12,12 @@ static float horizontalAngle, verticalAngle;
 static float fov = 90.0f;
 
 static float speed = 3.0f;
-float mouseSpeed = 0.005;
+float mouseSpeed = 0.005f;
 
 static const float PI = 3.1415926;
 static const float PIO2 = PI/2;
 
-static glm::vec3 cameraPosition(0, 0, -5);
+static glm::vec3 cameraPosition(0, 0, 5);
 
 void computeMatrixFromInput()
 {
@@ -36,7 +36,7 @@ void computeMatrixFromInput()
 	glfwGetMousePos(&mouseX, &mouseY);
 
 	//P("mouseX=%d, mouseY=%d\n", mouseX, mouseY);
-	horizontalAngle = mouseSpeed*(mouseX - windowWidth/2);
+	horizontalAngle = PI + mouseSpeed*(windowWidth/2 - mouseX);
 	verticalAngle = mouseSpeed*(windowHeight/2-mouseY);
 
 
@@ -45,11 +45,13 @@ void computeMatrixFromInput()
 	fov = 90 - 5*glfwGetMouseWheel();
 
 
-	glm::vec3 right = glm::vec3(sin(horizontalAngle+PIO2), 0, cos(horizontalAngle+PIO2));
+	glm::vec3 right = glm::vec3(sin(horizontalAngle-PIO2), 0, cos(horizontalAngle-PIO2));
 
 	glm::vec3 up = glm::cross(right, direction);
 	camera = glm::lookAt(cameraPosition, cameraPosition+direction, up);
 	projection = glm::perspective(fov, 4.0f/3.0f, 0.1f, 100.0f);
+
+	lastTime = currentTime;
 }
 
 glm::mat4 getCameraMatrix()

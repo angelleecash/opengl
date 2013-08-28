@@ -11,6 +11,7 @@ color_cube
 texture
 input
 model
+shader
 
 #################
 ## Eclipse

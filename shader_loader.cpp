@@ -44,7 +44,7 @@ int LoadShader(GLuint shaderId, const char* path)
 		char log[logLength+1];
 		log[logLength] = '\0';
 		glGetShaderInfoLog(shaderId, logLength, NULL, log);
-		P("shader log:%s\n", log);
+		P("shader %s log:%s\n", path, log);
 	}
 
 	return 0;
