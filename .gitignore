@@ -13,6 +13,8 @@ input
 model
 shader
 vbo
+transparency
+text
 
 #################
 ## Eclipse

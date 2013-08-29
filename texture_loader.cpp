@@ -79,3 +79,34 @@ GLuint loadDds(const char* path)
 	free(buffer);
 	return textureId;
 }
+
+
+
+GLuint LoadTga(const char* path)
+{
+	P("Loading tga %s\n", path);
+	GLuint textureId;
+	glGenTextures(1, &textureId);
+
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	int result = glfwLoadTexture2D(path, GLFW_BUILD_MIPMAPS_BIT);
+
+	//int result = glfwLoadTexture2D(path, 0);
+
+	P("result %d\n", result);
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+
+	//glGenerateMipmap(GL_TEXTURE_2D);
+
+	return textureId;
+}
+
+
+
