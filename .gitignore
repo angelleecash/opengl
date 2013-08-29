@@ -15,6 +15,7 @@ shader
 vbo
 transparency
 text
+extension
 
 #################
 ## Eclipse
