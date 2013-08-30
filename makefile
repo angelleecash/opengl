@@ -55,6 +55,9 @@ text: text.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo
 extension: extension.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o text2d.o
 	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) extension.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o text2d.o $(LIBS)  
 
+normal_mapping: normal_mapping.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o text2d.o tangent.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) normal_mapping.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o text2d.o tangent.o $(LIBS)  
+
 triangle.o: triangle.cpp
 shader_loader.o: shader_loader.cpp
 color_cube.o:color_cube.cpp
@@ -72,6 +75,8 @@ transparency.o:transparency.cpp
 text.o:text.cpp
 text2d.o:text2d.cpp
 extension.o:extension.cpp
+normal_mapping.o:normal_mapping.cpp
+tangent.o:tangent.cpp
 
 clean:
 	rm -f *.o
