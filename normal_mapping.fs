@@ -3,7 +3,7 @@
 
 varying vec2 uv;
 varying vec3 positionInWorldSpace;
-varying vec3 normalInCameraSpace;
+//varying vec3 normalInCameraSpace;
 varying vec3 eyeDirectionInCameraSpace;
 varying vec3 lightDirectionInCameraSpace;
 
@@ -20,7 +20,7 @@ uniform mat3 worldCamera3x3;
 void main()
 {
 	vec3 lightColor = vec3(1 ,1, 1);
-	float lightPower = 50.0;
+	float lightPower = 100.0;
 
 	vec3 materialDiffuseColor = texture2D(diffuseTextureId, uv).rgb;
 	vec3 materialAmbientColor = vec3(0.1, 0.1, 0.1) * materialDiffuseColor;
@@ -52,7 +52,9 @@ void main()
 	vec3 specularComponent = materialSpecularColor * lightColor * lightPower * pow(cosAlpha, 5.0)/distanceToLightSquare;
 
 
-	gl_FragColor.rgb = materialAmbientColor + diffuseComponent + specularComponent;
+	gl_FragColor.xyz = materialAmbientColor + diffuseComponent + specularComponent;
+	//gl_FragColor.rgb = materialAmbientColor + diffuseComponent;
+	//gl_FragColor.rgb = specularComponent;
 	//gl_FragColor.a = 1.0;
-	gl_FragColor.a = 0.5;
+//	gl_FragColor.a = 0.5;
 }

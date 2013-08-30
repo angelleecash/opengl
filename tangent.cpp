@@ -32,7 +32,7 @@ void ComputeTangents(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& u
 		float r = 1.0f / (deltaUv1.x*deltaUv2.y - deltaUv1.y*deltaUv2.x);
 
 		glm::vec3 tangent = (deltaPos1*deltaUv2.y - deltaPos2*deltaUv1.y) * r;
-		glm::vec3 bitangent = (deltaPos2*deltaUv1.x - deltaPos1*deltaUv1.y) * r;
+		glm::vec3 bitangent = (deltaPos2*deltaUv1.x - deltaPos1*deltaUv2.x) * r;
 
 		tangents.push_back(tangent);
 		tangents.push_back(tangent);

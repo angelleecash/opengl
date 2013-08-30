@@ -10,7 +10,7 @@ attribute vec3 vertexBitangent;
 //varying vec3 fragmentColor;
 varying vec2 uv;
 varying vec3 positionInWorldSpace;
-varying vec3 normalInCameraSpace;
+//varying vec3 normalInCameraSpace;
 varying vec3 eyeDirectionInCameraSpace;
 varying vec3 lightDirectionInCameraSpace;
 
@@ -34,7 +34,7 @@ void main()
 	vec3 lightPositionInCameraSpace = (camera*vec4(lightPosition,1)).xyz;
 	lightDirectionInCameraSpace = lightPositionInCameraSpace + eyeDirectionInCameraSpace;
 
-	normalInCameraSpace = (camera*world*vec4(normal, 0)).xyz;
+	//normalInCameraSpace = (camera*world*vec4(normal, 0)).xyz;
 
 	//fragmentColor = modelColor;
 	uv = texturePosition; 
