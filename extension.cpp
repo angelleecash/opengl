@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "GL/glew.h"
 
+#include <GL/gl.h>
+#include <GL/glext.h>
 #include <GL/glfw.h>
 
 #include <glm/glm.hpp>
@@ -76,9 +79,68 @@ void APIENTRY DebugOutputCallback(GLenum source, GLenum type, GLuint id, GLenum 
 	P("Message : %s\n", message);
 }
 
+static void Split(const char* text, char d)
+{
+	const char* p = text;
+	int length = strlen(text);
+	while(p < text + length)
+	{
+		const char * np = strchr(p, d);
+		if(np == NULL)
+		{
+			P("%s\n", p);
+			p = text + length;
+		}
+		else
+		{
+			for(int i=0; i < np-p;i++)
+			{
+				P("%c", p[i]);
+			}
+			P("\n");
+			p = np + 1;
+		}
+
+	}
+}
+
+static void GetExtensionInfo()
+{
+	//PFNGLGETSTRINGIPROC glGetStringi = 0;
+	//glGetStringi = wglGetProcAddress("glGetStringi");
+
+	int major, minor, revision;
+	glfwGetGLVersion(&major, &minor, &revision);
+	P("OpenGL version %d,%d %d\n", major, minor, revision);
+
+	const unsigned char* version = glGetString(GL_VERSION);
+	P("Open GL version %s\n", version);
+
+	const char* extensions = (const char*)glGetString(GL_EXTENSIONS);
+	P("%p, %s\n", extensions, extensions);
+
+	Split(extensions, ' ');
+	
+
+	GLint n = 0;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+	P("extension count %d\n", n);
+	for(GLint i=0; i < n; i++)
+	{
+		const unsigned char* extension = glGetStringi(GL_EXTENSIONS, i);
+		P("%s\n", extension);
+	}
+}
+
+static void GlfwErrorCallBack(int error, const char* desc)
+{
+	P("error code %d, %s\n", desc);
+}
 
 int main(int argc, char** argv)
 {
+	//glfwSetErrorCallback(GlfwErrorCallBack);
+
 	if(!glfwInit())
 	{
 		P("glfw init fail\n");
@@ -86,8 +148,8 @@ int main(int argc, char** argv)
 	}
 
 	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 2);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 1);
+	//glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
+	//glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 0);
 	
 	glfwOpenWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
 
@@ -113,12 +175,15 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
+
 	if(glewInit() != GLEW_OK)
 	{
 		P("glew init fail\n");
 		return 1;
 	}
 	
+	GetExtensionInfo();
+
 	glfwSetWindowTitle("transparency");
 
 	glfwEnable(GLFW_STICKY_KEYS);
