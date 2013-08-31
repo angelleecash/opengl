@@ -17,6 +17,7 @@ transparency
 text
 extension
 normal_mapping
+render2texture
 
 #################
 ## Eclipse
