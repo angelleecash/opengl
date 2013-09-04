@@ -4,7 +4,7 @@ INCLUDE = -I ~/glew/include -I ~/glfw/include -I ~/glm
 CFLAGS = -std=c99 -O4 -Wall -g $(SYSCFLAGS) $(MYCFLAGS) $(INCLUDE)
 CPPFLAGS = -Wall -g $(INCLUDE)
 LDFLAGS = $(SYSLDFLAGS) $(MYLDFLAGS)
-LIBS = -lm -ldl $(SYSLIBS) $(MYLIBS)
+LIBS = -lm -ldl -lGLU $(SYSLIBS) $(MYLIBS)
 
 SYSCFLAGS =
 MYCFLAGS = 
@@ -64,6 +64,9 @@ render2texture: render2texture.o util.o shader_loader.o texture_loader.o inputs.
 lightmap: lightmap.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o
 	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) lightmap.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o $(LIBS)  
 
+shadow_mapping: shadow_mapping.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o
+	$(CPP) $(CPPFLAGS) -o $@ $(LDFLAGS) shadow_mapping.o util.o shader_loader.o texture_loader.o inputs.o model_loader.o vbo_indexer.o $(LIBS)  
+	
 triangle.o: triangle.cpp
 shader_loader.o: shader_loader.cpp
 color_cube.o:color_cube.cpp
@@ -85,6 +88,9 @@ normal_mapping.o:normal_mapping.cpp
 tangent.o:tangent.cpp
 render2texture.o:render2texture.cpp
 lightmap.o:lightmap.cpp
+shadow_mapping.o:shadow_mapping.cpp
 
 clean:
 	rm -f *.o
+	find . -maxdepth 1 -perm +a+x -type f -exec rm -f {} \;
+

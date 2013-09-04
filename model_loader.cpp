@@ -13,7 +13,6 @@
 #include "model_loader.h"
 bool LoadObj(const char* path, std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals)
 {
-	P("Loading model %s \n", path);
 	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
 	
 	std::vector<glm::vec3> tmpVertices;
@@ -97,5 +96,7 @@ bool LoadObj(const char* path, std::vector<glm::vec3>& vertices, std::vector<glm
 		uvs.push_back(uv);
 		normals.push_back(normal);
 	}
+
+	P("Loading %s vertex %d normal %d uv %d\n", path, vertices.size(), normals.size(), uvs.size());
 	return true;
 }

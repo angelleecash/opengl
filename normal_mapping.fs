@@ -49,7 +49,7 @@ void main()
 
 	vec3 diffuseComponent = materialDiffuseColor * lightColor * lightPower * cosTheta / distanceToLightSquare;
 
-	vec3 specularComponent = materialSpecularColor * lightColor * lightPower * pow(cosAlpha, 5.0)/distanceToLightSquare;
+	vec3 specularComponent = materialSpecularColor * lightColor * lightPower * pow(cosAlpha, 5.0);
 
 
 	gl_FragColor.xyz = materialAmbientColor + diffuseComponent + specularComponent;

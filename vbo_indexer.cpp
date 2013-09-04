@@ -32,12 +32,9 @@ static bool findSimilarVertex(VertexPack& pack, std::map<VertexPack, unsigned sh
 void indexVbo(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals, std::vector<unsigned short>& indices, std::vector<glm::vec3>& indexedVertices, std::vector<glm::vec2>& indexedUvs, std::vector<glm::vec3>& indexedNormals)
 {
 	std::map<VertexPack, unsigned short> vertexToIndex;
-	P("before index vertex count %d \n", vertices.size());
 	for(unsigned int i=0; i < vertices.size(); i++)
 	{
-		//P("processing %d \n", i);
 		unsigned short index;
-		//bool found = findSimilarVertex(vertices[i], uvs[i], normals[i], indexedVertices, indexedUvs, indexedNormals, index);
 
 		VertexPack pack = {vertices[i], uvs[i], normals[i]};
 
@@ -57,7 +54,7 @@ void indexVbo(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs, std
 		}
 	}
 
-	P("after index vertex count %d \n", indexedVertices.size());
+	P("vbo index from vertex %d to indexed vertex %d indices %d\n", vertices.size(), indexedVertices.size(), indices.size());
 }
 
 bool IsNear(float v1, float v2)
