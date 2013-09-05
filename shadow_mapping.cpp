@@ -90,17 +90,30 @@ static void PrepareShadowMap()
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
 
 	CheckError();
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, WIDTH, HEIGHT, 0, GL_DEPTH_COMPONENT16, GL_FLOAT, 0);
 
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WIDTH, HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	CheckError();
+	/*
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+	*/
 
-	CheckError();
 	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+
+	GLuint renderBuffer;
+	CheckError();
+	glGenRenderbuffersEXT(1, &renderBuffer);
+	glBindRenderbufferEXT(GL_RENDERBUFFER, renderBuffer);
+	CheckError();
+	glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, WIDTH, HEIGHT);	
+	CheckError();
+	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBuffer);
 
 	CheckError();
 
@@ -111,7 +124,7 @@ static void PrepareShadowMap()
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER);
 	if(status != GL_FRAMEBUFFER_COMPLETE)
 	{
-		P("Frame buffer error %d\n", status);
+		P("________________Frame buffer error %d\n", status);
 	}
 }
 
@@ -193,6 +206,7 @@ int main(int argc, char** argv)
 		//fill in depth data
 		glDrawElements(GL_TRIANGLES, depthIndices.size(), GL_UNSIGNED_SHORT, (void*)0);
 
+		CheckError();
 		///////////////////////////////////////////////
 		glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, WIDTH, HEIGHT);
@@ -249,10 +263,11 @@ int main(int argc, char** argv)
 
 		glUniform3f(lightPositionInWorld, lightInvDir.x, lightInvDir.y, lightInvDir.z);
 
-		glBindBuffer(GL_TRIANGLES, indexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 		glDrawElements(GL_TRIANGLES, depthIndices.size(), GL_UNSIGNED_SHORT, (void*)0);
 
+		CheckError();
 		glfwSwapBuffers();
 	}
 
